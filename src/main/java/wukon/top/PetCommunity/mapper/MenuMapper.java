@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import wukon.top.PetCommunity.domain.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
 * @author 13069
 * @description 针对表【menu】的数据库操作Mapper
@@ -14,6 +16,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 @Mapper
 @Repository
 public interface MenuMapper extends BaseMapper<Menu> {
+
+    List<String> selectPermsByUserId(Long userid);
 
 }
 

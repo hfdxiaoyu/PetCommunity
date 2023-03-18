@@ -26,6 +26,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    //登录的接口
+    @PostMapping("/login")
+    public ResponseResult login(@RequestBody User user){
+        //登录
+        return userService.login(user);
+    }
+
+    //退出登录的接口
+    @RequestMapping("/logout")
+    public ResponseResult logout(){
+        return userService.logout();
+    }
+
     /**
       *功能描述：获取所有用户信息
       */
