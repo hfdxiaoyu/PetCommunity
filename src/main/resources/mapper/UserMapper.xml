@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wukon.top.PetCommunity.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="wukon.top.PetCommunity.domain.User">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="phonenumber" column="phonenumber" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="INTEGER"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="userType" column="user_type" jdbcType="INTEGER"/>
+            <result property="createBy" column="create_by" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="TIMESTAMP"/>
+            <result property="ip" column="ip" jdbcType="VARCHAR"/>
+            <result property="localInfo" column="local_info" jdbcType="VARCHAR"/>
+            <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_name,nick_name,
+        password,status,email,
+        phonenumber,address,sex,avatar,
+        user_type,create_by,update_by,
+        ip,local_info,del_flag
+    </sql>
+</mapper>

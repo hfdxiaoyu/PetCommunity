@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wukon.top.PetCommunity.mapper.MenuMapper">
+
+    <resultMap id="BaseResultMap" type="wukon.top.PetCommunity.domain.Menu">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+            <result property="permKey" column="perm_key" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,menu_name,perm_key
+    </sql>
+</mapper>

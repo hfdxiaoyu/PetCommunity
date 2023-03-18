@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wukon.top.PetCommunity.mapper.FriendMapper">
+
+    <resultMap id="BaseResultMap" type="wukon.top.PetCommunity.domain.Friend">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="attentionId" column="attention_id" jdbcType="BIGINT"/>
+            <result property="attentionStatus" column="attention_status" jdbcType="CHAR"/>
+            <result property="attentionTime" column="attention_time" jdbcType="TIMESTAMP"/>
+            <result property="byAttentionId" column="by_attention_id" jdbcType="BIGINT"/>
+            <result property="byAttentionStatus" column="by_attention_status" jdbcType="CHAR"/>
+            <result property="byAttentionTime" column="by_attention_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,attention_id,attention_status,
+        attention_time,by_attention_id,by_attention_status,
+        by_attention_time
+    </sql>
+</mapper>

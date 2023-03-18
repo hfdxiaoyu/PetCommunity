@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wukon.top.PetCommunity.mapper.ChattingRecordsMapper">
+
+    <resultMap id="BaseResultMap" type="wukon.top.PetCommunity.domain.ChattingRecords">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="sendUserId" column="send_user_id" jdbcType="BIGINT"/>
+            <result property="acceptUserId" column="accept_user_id" jdbcType="BIGINT"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="sendtime" column="sendtime" jdbcType="TIMESTAMP"/>
+            <result property="channelName" column="channel_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,send_user_id,accept_user_id,
+        content,sendtime,channel_name
+    </sql>
+</mapper>
