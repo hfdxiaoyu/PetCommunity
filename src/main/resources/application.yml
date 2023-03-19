@@ -46,3 +46,8 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*.xml #扫描所有mybatis的xml文件
 server:
   port: 9090
+
+#  文件上传路径
+files:
+  upload:
+    path: D:/Study/java work/2022java/upload/

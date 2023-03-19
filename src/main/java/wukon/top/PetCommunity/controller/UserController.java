@@ -3,6 +3,7 @@ package wukon.top.PetCommunity.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import wukon.top.PetCommunity.domain.User;
@@ -37,6 +38,18 @@ public class UserController {
     @RequestMapping("/logout")
     public ResponseResult logout(){
         return userService.logout();
+    }
+
+    /**
+      *功能描述：注册的接口
+      */
+    @PostMapping("/register")
+    public ResponseResult register(@RequestBody User user){
+        boolean save = userService.save(user);
+        if (save)
+          return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), "注册成功");
+        else
+            return new ResponseResult(StatusCodeEnum.ERROR.getCode(), "注册失败");
     }
 
     /**
