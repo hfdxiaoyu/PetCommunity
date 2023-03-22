@@ -5,6 +5,8 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/file")
+@Slf4j
 public class FileController {
 
     //注入文件上传路径
@@ -104,6 +107,8 @@ public class FileController {
         //写出流要设置的属性
         response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileUUID, "UTF-8"));
         response.setContentType("application/octet-stream");
+
+        log.info("图片{}被获取",fileUUID);
         //写出流
         ServletOutputStream os = response.getOutputStream();
         //读取文件字节流
