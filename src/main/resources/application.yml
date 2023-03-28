@@ -51,3 +51,11 @@ server:
 files:
   upload:
     path: D:/Study/java work/2022java/upload/
+
+
+# 分页框架
+pagehelper:
+  helperDialect: mysql #指定数据库
+  reasonable: true #分页合理化参数默认false，当该参数设置为true 时，pageNum <= 0 时，默认显示第一页，pageNum 超过 pageSize 时，显示最后一页。
+  supportMethodsArguments: true #分页插件会根据查询方法的参数中，自动根据params 配置的字段中取值，找到合适的值会自动分页。
+  params=count: countSql

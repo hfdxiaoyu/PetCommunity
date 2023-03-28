@@ -32,6 +32,11 @@ public class BbsContent implements Serializable {
     private Long userId;
 
     /**
+      * 文章标题
+      */
+    private String title;
+
+    /**
      * 文章内容
      */
     private String content;
@@ -55,6 +60,10 @@ public class BbsContent implements Serializable {
      * 创建时间
      */
     private Date createtime;
+
+    //这个实体类不是数据库中的字段
+    @TableField(exist = false)
+    private User user;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

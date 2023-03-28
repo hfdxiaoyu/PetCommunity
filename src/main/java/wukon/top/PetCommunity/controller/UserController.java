@@ -1,6 +1,7 @@
 package wukon.top.PetCommunity.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sun.org.apache.bcel.internal.classfile.Code;
@@ -105,6 +106,23 @@ public class UserController {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
         return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(),StatusCodeEnum.SUCCESS.getMsg() ,userService.getOne(queryWrapper));
+    }
+
+    /**
+      *功能描述：更新用户信息
+      *@param:
+      *@return:
+      *@auther:
+      *@date:
+      */
+    @PostMapping("/update")
+    public ResponseResult editOneUser(@RequestBody User user){
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.setEntity(user);
+        boolean update = userService.update(updateWrapper);
+        if (!update)
+            return new ResponseResult(StatusCodeEnum.ERROR.getCode(),"更新失败" ,update);
+        return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(),"更新成功" ,update);
     }
 
     /**

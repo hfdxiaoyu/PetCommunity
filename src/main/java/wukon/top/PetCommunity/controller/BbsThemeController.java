@@ -54,7 +54,7 @@ public class BbsThemeController {
     }
 
     /**
-     *功能描述：新增权限信息
+     *功能描述：新增标签信息
      *@return: Integer
      */
     @PostMapping("/save")

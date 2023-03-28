@@ -5,8 +5,9 @@
 <mapper namespace="wukon.top.PetCommunity.mapper.BbsContentMapper">
 
     <resultMap id="BaseResultMap" type="wukon.top.PetCommunity.domain.BbsContent">
-            <id property="id" column=" id" jdbcType="BIGINT"/>
+            <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="img" column="img" jdbcType="VARCHAR"/>
             <result property="viewCount" column="view_count" jdbcType="BIGINT"/>
@@ -15,7 +16,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-         id,user_id,content,
+        id,user_id,title,content,
         img,view_count,del_type,
         createtime
     </sql>

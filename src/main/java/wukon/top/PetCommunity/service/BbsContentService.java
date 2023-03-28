@@ -2,6 +2,7 @@ package wukon.top.PetCommunity.service;
 
 import wukon.top.PetCommunity.domain.BbsContent;
 import com.baomidou.mybatisplus.extension.service.IService;
+import wukon.top.PetCommunity.util.ResponseResult;
 
 /**
 * @author 13069
@@ -9,5 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-03-15 10:16:42
 */
 public interface BbsContentService extends IService<BbsContent> {
+
+    ResponseResult queryIndexContentListPaged(Integer pageNum,Integer pageSize);
 
 }

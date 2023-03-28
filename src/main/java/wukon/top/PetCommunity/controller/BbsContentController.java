@@ -1,12 +1,14 @@
 package wukon.top.PetCommunity.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import wukon.top.PetCommunity.domain.BbsContent;
+import wukon.top.PetCommunity.domain.User;
 import wukon.top.PetCommunity.enums.StatusCodeEnum;
 import wukon.top.PetCommunity.service.BbsContentService;
 import wukon.top.PetCommunity.util.ResponseResult;
@@ -44,13 +46,25 @@ public class BbsContentController {
                                    @RequestParam Integer pageSize)
     {
         IPage<BbsContent> page = new Page<>(pageNum,pageSize);
-        QueryWrapper<BbsContent> queryWrapper = new QueryWrapper<>();
+//        QueryWrapper<BbsContent> queryWrapper = new QueryWrapper<>();
 
         //根据id倒序
-        queryWrapper.orderByDesc("id");
-        IPage<BbsContent> BbsContentIPage = bbsContentService.page(page, queryWrapper);
+//        queryWrapper.orderByDesc("id");
+        IPage<BbsContent> BbsContentIPage = bbsContentService.page(page);
 
         return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), BbsContentIPage);
+    }
+
+    /**
+      *功能描述：首页的接口
+      *@param: pageNum pageSize
+      *@return: ResponseResult
+      */
+    @GetMapping("/indexPage")
+    public ResponseResult indexPage(@RequestParam Integer pageNum,
+                                    @RequestParam Integer pageSize){
+
+        return bbsContentService.queryIndexContentListPaged(pageNum,pageSize);
     }
 
     /**
@@ -65,7 +79,7 @@ public class BbsContentController {
 
 
     /**
-     *功能描述：删除一个角色
+     *功能描述：删除一个帖子
      */
     @DeleteMapping("/delete/{id}")
     public ResponseResult delete(@PathVariable Long id){
@@ -80,6 +94,32 @@ public class BbsContentController {
     public ResponseResult deleteBatch(@RequestBody List<Long> ids){
         boolean b = bbsContentService.removeByIds(ids);
         return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), "批量删除成功",b);
+    }
+
+    /**
+      *功能描述：收藏帖子
+     * TODO:待实现
+      */
+    public ResponseResult  collectContent(@RequestBody BbsContent bbsContent){
+        boolean b = bbsContentService.save(bbsContent);
+        return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), "收藏帖子成功",b);
+    }
+
+    /**
+     *功能描述：更新帖子信息
+     *@param:
+     *@return:
+     *@auther:
+     *@date:
+     */
+    @PostMapping("/update")
+    public ResponseResult editOneUser(@RequestBody BbsContent bbsContent){
+        UpdateWrapper<BbsContent> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.setEntity(bbsContent);
+        boolean update = bbsContentService.update(updateWrapper);
+        if (!update)
+            return new ResponseResult(StatusCodeEnum.ERROR.getCode(),"更新失败" ,update);
+        return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(),"更新成功" ,update);
     }
     
 }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import wukon.top.PetCommunity.domain.BbsContent;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
 * @author 13069
 * @description 针对表【bbs_content】的数据库操作Mapper
@@ -14,6 +16,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 @Mapper
 @Repository
 public interface BbsContentMapper extends BaseMapper<BbsContent> {
+
+    
 
 }
 
