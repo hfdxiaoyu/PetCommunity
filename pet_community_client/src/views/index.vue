@@ -36,7 +36,6 @@
                   </div>
                 </div>
 
-
               </div>
               <div class="text item">
                 <div  style="display: flex;flex-direction: row">

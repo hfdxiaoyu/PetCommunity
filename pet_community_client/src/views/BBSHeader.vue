@@ -54,25 +54,39 @@
           <div class="navbar-container-right">
             <div class="navbar-btns-User">
               <!--用户登录: 展示用户的头像以及其他信息-->
-              <div class="userPhoto" @mouseover="mouseOver" @mouseleave="mouseLeave" v-if="isLogin">
-                <!-- 用户头像 -->
-                <a class="hasAvatar" :style="{opacity}" href="#" v-if="user">
-                  <img :src="portrait">
-                </a>
+              <!--    移到用户头像上面，信息弹出框   -->
+              <div class="userPhoto" @mouseover="mouseOver" @mouseleave="mouseLeave" v-if="getIsLogin">
+                <el-popover
+                  placement="top"
+                  width="150"
+                  trigger="hover">
+<!--                  弹出页面-->
+                  <div style="display: flex;flex-direction: column; align-items: center;">
+                    <a href="#">个人中心</a>
+                    <a href="#" @click="logout">退出登录</a>
+                  </div>
+
+                  <!-- 用户头像 -->
+                  <a class="hasAvatar" :style="{opacity}" href="#" slot="reference">
+                    <img :src="getUserImg">
+                  </a>
+                </el-popover>
+
+
                 <!-- 用信息弹出框 初始display:none-->
                 <div class="navbar-profile" :style="{display}" v-if="user">
                   <div class="profile-user">
                     <!-- 用户简介的头像 -->
                     <a class="profile-avatar" href="#">
-                      <img :src="portrait">
+                      <img :src="getUserImg">
                     </a>
-                    <p class="profile-nickName">{{ username }}</p>
+                    <p class="profile-nickName">123{{ username }}</p>
                   </div>
                   <div class="profile-fans">
                     <ul class="">
-                      <li><p>{{ user.fans }}</p>粉丝</li>
-                      <li><p>{{ user.attention }}</p>关注</li>
-                      <li><p>{{ user.good }}</p>获赞</li>
+                      <li><p>{{ user.fans }}1</p>粉丝</li>
+                      <li><p>{{ user.attention }}1</p>关注</li>
+                      <li><p>{{ user.good }}1</p>获赞</li>
                     </ul>
                   </div>
                   <div class="profile-personal">
@@ -86,9 +100,41 @@
                 </div>
               </div>
               <!--用户未登录: 提示用户登录-->
-              <div class="userPhoto" v-else @click.prevent="login">
-                <a href="">登录/注册</a>
+              <div class="userPhoto" v-else @click.prevent="tologin">
+<!--                <a href="">登录/注册</a>-->
+
+                    <el-dialog title="登录" :width="'40%'" :visible.sync="dialogFormVisible"
+                               :close-on-click-modal="true" :destroy-on-close="true"
+                    :modal-append-to-body="false">
+                      <el-form :model="form" :rules="rules" ref="userForm">
+                        <el-form-item label="账号" prop="userName"  :label-width="formLabelWidth">
+                          <el-input v-model="form.userName" autocomplete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码" prop="password" :label-width="formLabelWidth">
+                          <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
+                        </el-form-item>
+                      </el-form>
+                      <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">注 册</el-button>
+                        <el-button type="primary" @click="login">登 录</el-button>
+                      </div>
+                    </el-dialog>
+
+                  <a href="#" v-if="!getIsLogin" type="text" @click="dialogFormVisible = true">登录/注册</a>
+
               </div>
+              <!--               头像-->
+<!--              <div class="navbar-btn navbar-btn-dynamic navbar-fl" v-if="getIsLogin">-->
+
+<!--                <div class="demo-image">-->
+<!--                  <div class="block" v-for="fit in fits" :key="fit">-->
+<!--                    <el-image-->
+<!--                      style="width: 45px; height: 45px; border-radius: 50%"-->
+<!--                      :src="getUserImg"-->
+<!--                      :fit="fit"></el-image>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
 
               <!-- 动态 -->
               <div class="navbar-btn navbar-btn-dynamic navbar-fl" @click.prevent="stat">
@@ -133,9 +179,26 @@ export default {
     return {
       opacity: 1,
       display: 'none',
-      isLogin: false,
       user: JSON.parse(window.sessionStorage.getItem('user')),
       keywords:'',
+      dialogFormVisible: false,//表单
+      form: { //表单
+        userName: '',
+        password: '',
+      },
+      rules:{//表单验证
+        userName: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 5,max: 15,message: '长度在5到15个字符',trigger: 'blur'}
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 5,max: 20,message: '长度在5到20个字符',trigger: 'blur'}
+        ],
+      },
+      formLabelWidth: '120px',
+      fits: ['fill'], //头像
+      visible: false, //头像弹出框
     }
   },
   methods: {
@@ -150,8 +213,8 @@ export default {
     transIndex() {
       this.$router.push('/forum')
     },
-    login() {
-      this.$router.push('/login')
+    tologin() {
+      // this.$router.push('/login')
     },
     write() {
       this.$router.push('/write')
@@ -161,12 +224,6 @@ export default {
     },
     myCollection(){
       this.$router.push('/collection')
-    },
-    logout() {
-      //清空所有缓存
-      window.sessionStorage.clear()
-      this.$router.replace('/forum')
-      location.reload()       //刷新页面
     },
     search(){
       const keywords = this.keywords;
@@ -180,6 +237,45 @@ export default {
     },
     information(){
       this.$router.push('/information')
+    },//我的方法
+    login(){//登录的方法
+      this.$refs['userForm'].validate((valid)=>{
+        if (valid){ //表单校验合法
+          this.request.post("/user/login", this.form).then(res => {
+            if(res.data.code== '200') {
+              localStorage.setItem("token",JSON.stringify(res.data.data.token)) //存储token信息到浏览器
+
+              this.$message.success("登录成功")
+              this.$store.state.isLogin=true //设置登录成功标志
+              //把头像存入vuex
+              this.$store.state.userimg=res.data.data.userimg
+              this.$router.push("/")
+            } else {
+              this.$message.error(res.data.msg)
+            }
+          })
+          this.dialogFormVisible = false
+        }
+      })
+
+    },//退出登录
+    logout() {
+      this.request.post("/user/logout").then(res => {
+        console.log(res)
+        //清空所有缓存
+        window.sessionStorage.clear()
+        this.$store.state.isLogin=false;
+        this.$store.state.userimg='';
+      })
+      // location.reload()       //刷新页面
+    }
+  },//计算属性
+  computed:{
+    getUserImg(){ //获取用户头像的计算属性
+      return this.$store.state.userimg
+    },
+    getIsLogin(){ //获取是否登录
+      return this.$store.state.isLogin
     }
   }
 }

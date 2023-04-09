@@ -10,7 +10,8 @@ package wukon.top.PetCommunity.enums;
 public enum StatusCodeEnum {
     SUCCESS(200,"成功"),
     ERROR(500,"服务器错误"),
-    NOTFOUND(404,"未找到页面")
+    NOTFOUND(404,"未找到页面"),
+    GOOD(1000,"我很好")
     ;
 
     private int code;

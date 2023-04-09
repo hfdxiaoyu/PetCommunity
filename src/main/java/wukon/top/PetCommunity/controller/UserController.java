@@ -1,13 +1,15 @@
 package wukon.top.PetCommunity.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sun.org.apache.bcel.internal.classfile.Code;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import wukon.top.PetCommunity.domain.User;
+import wukon.top.PetCommunity.domain.dto.LoginDto;
 import wukon.top.PetCommunity.enums.StatusCodeEnum;
 import wukon.top.PetCommunity.service.UserService;
 import wukon.top.PetCommunity.util.ResponseResult;
@@ -30,7 +32,10 @@ public class UserController {
 
     //登录的接口
     @PostMapping("/login")
-    public ResponseResult login(@RequestBody User user){
+    public ResponseResult login(@RequestBody LoginDto loginDto){
+        User user = new User();
+        //对象拷贝
+        BeanUtils.copyProperties(loginDto,user);
         //登录
         return userService.login(user);
     }

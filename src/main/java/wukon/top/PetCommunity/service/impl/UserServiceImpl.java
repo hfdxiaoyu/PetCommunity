@@ -1,6 +1,7 @@
 package wukon.top.PetCommunity.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import wukon.top.PetCommunity.domain.LoginUser;
 import wukon.top.PetCommunity.domain.User;
+import wukon.top.PetCommunity.domain.po.LoginUserPo;
 import wukon.top.PetCommunity.service.UserService;
 import wukon.top.PetCommunity.mapper.UserMapper;
 import org.springframework.stereotype.Service;
@@ -51,11 +53,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userid = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(userid);
-        Map<String,String> map = new HashMap<>();
-        map.put("token",jwt);
+//        Map<String,String> map = new HashMap<>();
+        //查询用户信息
+        User user1 = userMapper.selectById(userid);
+        LoginUserPo loginUserPo = new LoginUserPo();
+        loginUserPo.setToken(jwt);
+        //对象拷贝
+        BeanUtils.copyProperties(user1,loginUserPo);
+//        map.put("token",jwt);
+//        map.put("userimg",user1.getAvatar());
         //把完整的用户信息存入redis ， userid作为key
         redisCache.setCacheObject("login:"+userid,loginUser);
-        return new ResponseResult(200,"登录成功",map);
+        return new ResponseResult(200,"登录成功",loginUserPo);
     }
 
     @Override
