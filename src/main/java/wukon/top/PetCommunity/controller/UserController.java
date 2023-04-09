@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import wukon.top.PetCommunity.domain.User;
 import wukon.top.PetCommunity.domain.dto.LoginDto;
@@ -41,6 +42,8 @@ public class UserController {
     }
 
     //退出登录的接口
+    //设置权限
+//    @PreAuthorize("@ex.hasAnyAuthority('system:admin:list','system:user:list')")
     @RequestMapping("/logout")
     public ResponseResult logout(){
         return userService.logout();

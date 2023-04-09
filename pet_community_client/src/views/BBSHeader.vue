@@ -243,12 +243,11 @@ export default {
         if (valid){ //表单校验合法
           this.request.post("/user/login", this.form).then(res => {
             if(res.data.code== '200') {
-              localStorage.setItem("token",JSON.stringify(res.data.data.token)) //存储token信息到浏览器
-
+              localStorage.setItem("user",JSON.stringify(res.data.data)) //存储token信息到浏览器
               this.$message.success("登录成功")
               this.$store.state.isLogin=true //设置登录成功标志
               //把头像存入vuex
-              this.$store.state.userimg=res.data.data.userimg
+              this.$store.state.userimg=res.data.data.avatar
               this.$router.push("/")
             } else {
               this.$message.error(res.data.msg)
@@ -266,6 +265,7 @@ export default {
         window.sessionStorage.clear()
         this.$store.state.isLogin=false;
         this.$store.state.userimg='';
+        localStorage.removeItem("user")
       })
       // location.reload()       //刷新页面
     }

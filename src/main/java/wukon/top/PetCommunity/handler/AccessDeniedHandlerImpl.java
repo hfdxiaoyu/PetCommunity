@@ -17,6 +17,7 @@ import java.io.IOException;
  * @Auther:1306933
  * @Date:2022/8/8
  * @version:1.0
+ * 认证失败处理器
  */
 @Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
