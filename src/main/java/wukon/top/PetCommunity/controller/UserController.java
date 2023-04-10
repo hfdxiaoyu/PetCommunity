@@ -4,17 +4,24 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import wukon.top.PetCommunity.domain.User;
+import wukon.top.PetCommunity.domain.UserRole;
 import wukon.top.PetCommunity.domain.dto.LoginDto;
 import wukon.top.PetCommunity.enums.StatusCodeEnum;
+import wukon.top.PetCommunity.service.RoleMenuService;
+import wukon.top.PetCommunity.service.UserRoleService;
 import wukon.top.PetCommunity.service.UserService;
 import wukon.top.PetCommunity.util.ResponseResult;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,10 +33,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
-    @Autowired
+    @Resource
     private UserService userService;
+
+    @Resource
+    private UserRoleService userRoleService;
 
     //登录的接口
     @PostMapping("/login")
@@ -54,11 +65,29 @@ public class UserController {
       */
     @PostMapping("/register")
     public ResponseResult register(@RequestBody User user){
+        //对密码进行加密
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encodePassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodePassword);
+        //存储用户信息
         boolean save = userService.save(user);
-        if (save)
-          return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), "注册成功");
-        else
+        if (save) {
+            //注册成功之后为用户赋予权限信息
+            QueryWrapper queryWrapper = new QueryWrapper();
+            queryWrapper.eq("user_name",user.getUserName());
+            //根据用户名查询用户信息
+            User oneUser = userService.getOne(queryWrapper);
+            UserRole userRole = new UserRole(oneUser.getId(),2L);
+            boolean save1 = userRoleService.save(userRole);
+            if (save1)
+                log.info("用户{}权限添加成功",oneUser);
+            else
+                log.error("用户{}权限添加失败",oneUser);
+            return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), "注册成功");
+        }else {
+            log.info("{}注册失败",user);
             return new ResponseResult(StatusCodeEnum.ERROR.getCode(), "注册失败");
+        }
     }
 
     /**

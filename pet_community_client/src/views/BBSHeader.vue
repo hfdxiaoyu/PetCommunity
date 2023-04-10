@@ -56,21 +56,21 @@
               <!--用户登录: 展示用户的头像以及其他信息-->
               <!--    移到用户头像上面，信息弹出框   -->
               <div class="userPhoto" @mouseover="mouseOver" @mouseleave="mouseLeave" v-if="getIsLogin">
-                <el-popover
-                  placement="top"
-                  width="150"
-                  trigger="hover">
-<!--                  弹出页面-->
-                  <div style="display: flex;flex-direction: column; align-items: center;">
-                    <a href="#">个人中心</a>
-                    <a href="#" @click="logout">退出登录</a>
-                  </div>
+                <!--                <el-popover-->
+                <!--                  placement="top"-->
+                <!--                  width="150"-->
+                <!--                  trigger="hover">-->
+                <!--                  弹出页面-->
+                <!--                  <div style="display: flex;flex-direction: column; align-items: center;">-->
+                <!--                    <a href="#">个人中心</a>-->
+                <!--                    <a href="#" @click="logout">退出登录</a>-->
+                <!--                  </div>-->
 
-                  <!-- 用户头像 -->
-                  <a class="hasAvatar" :style="{opacity}" href="#" slot="reference">
-                    <img :src="getUserImg">
-                  </a>
-                </el-popover>
+                <!-- 用户头像 -->
+                <a class="hasAvatar" :style="{opacity}" href="#" slot="reference">
+                  <img :src="getUserImg">
+                </a>
+                <!--                </el-popover>-->
 
 
                 <!-- 用信息弹出框 初始display:none-->
@@ -80,15 +80,15 @@
                     <a class="profile-avatar" href="#">
                       <img :src="getUserImg">
                     </a>
-                    <p class="profile-nickName">123{{ username }}</p>
+                    <p class="profile-nickName">{{ this.user.nickName }}</p>
                   </div>
-                  <div class="profile-fans">
-                    <ul class="">
-                      <li><p>{{ user.fans }}1</p>粉丝</li>
-                      <li><p>{{ user.attention }}1</p>关注</li>
-                      <li><p>{{ user.good }}1</p>获赞</li>
-                    </ul>
-                  </div>
+                  <!--                  <div class="profile-fans">-->
+                  <!--                    <ul class="">-->
+                  <!--                      <li><p>{{ user.fans }}</p>粉丝</li>-->
+                  <!--                      <li><p>{{ user.attention }}</p>关注</li>-->
+                  <!--                      <li><p>{{ user.good }}</p>获赞</li>-->
+                  <!--                    </ul>-->
+                  <!--                  </div>-->
                   <div class="profile-personal">
                     <ul>
                       <li @click="userinfo">个人中心</li>
@@ -96,45 +96,103 @@
                     </ul>
                   </div>
                   <div class="profile-logout" @click="myCollection">我的收藏</div>
-                  <div class="profile-logout" @click="logout">退出</div>
+                  <div class="profile-logout" @click="logout">退出登录</div>
                 </div>
               </div>
               <!--用户未登录: 提示用户登录-->
               <div class="userPhoto" v-else @click.prevent="tologin">
-<!--                <a href="">登录/注册</a>-->
 
-                    <el-dialog title="登录" :width="'40%'" :visible.sync="dialogFormVisible"
-                               :close-on-click-modal="true" :destroy-on-close="true"
-                    :modal-append-to-body="false">
-                      <el-form :model="form" :rules="rules" ref="userForm">
-                        <el-form-item label="账号" prop="userName"  :label-width="formLabelWidth">
-                          <el-input v-model="form.userName" autocomplete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="密码" prop="password" :label-width="formLabelWidth">
-                          <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
-                        </el-form-item>
-                      </el-form>
-                      <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false">注 册</el-button>
-                        <el-button type="primary" @click="login">登 录</el-button>
-                      </div>
-                    </el-dialog>
+                <el-dialog title="登录" :width="'40%'" :visible.sync="dialogFormVisible"
+                           :close-on-click-modal="true" :destroy-on-close="true"
+                           :modal-append-to-body="false">
+                  <el-form :model="form" :rules="rules" ref="userForm">
+                    <el-form-item label="账号" prop="userName" :label-width="formLabelWidth">
+                      <el-input v-model="form.userName" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" prop="password" :label-width="formLabelWidth">
+                      <el-input v-model="form.password" type="password" autocomplete="off"></el-input>
+                    </el-form-item>
+                  </el-form>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false;regDialogFormVisible=true;">注 册</el-button>
+                    <el-button type="primary" @click="login">登 录</el-button>
+                  </div>
+                </el-dialog>
 
-                  <a href="#" v-if="!getIsLogin" type="text" @click="dialogFormVisible = true">登录/注册</a>
+                <a href="#" v-if="!getIsLogin" type="text" @click="dialogFormVisible = true">登录/注册</a>
+                <!--  注册-->
+                <el-dialog title="注册" :width="'40%'" :visible.sync="regDialogFormVisible"
+                           :close-on-click-modal="true" :destroy-on-close="true"
+                           :modal-append-to-body="false">
+                  <el-form :model="reform" :rules="reRules" ref="reUserForm">
+                    <el-form-item label="账号" prop="userName" :label-width="formLabelWidth">
+                      <el-input v-model="reform.userName" autocomplete="off"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="昵称" prop="nickName" :label-width="formLabelWidth">
+                      <el-input v-model="reform.nickName" type="text" autocomplete="off"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="密码" prop="password" :label-width="formLabelWidth">
+                      <el-input v-model="reform.password" type="password" autocomplete="off"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="邮箱" prop="email" :label-width="formLabelWidth">
+                      <el-input v-model="reform.email" type="text" autocomplete="off"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="电话号码" prop="phonenumber" :label-width="formLabelWidth">
+                      <el-input v-model="reform.phonenumber" type="text" autocomplete="off"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="地址" prop="address" :label-width="formLabelWidth">
+                      <el-input v-model="reform.address" type="text" autocomplete="off"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="性别" prop="sex" :label-width="formLabelWidth">
+                      <el-radio-group v-model="reform.sex">
+                        <el-radio label="1" value="1">男</el-radio>
+                        <el-radio label="2" value="2">女</el-radio>
+                        <el-radio label="0" value="0">未知</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+
+<!--                    <el-form-item label="头像" prop="avatar" :label-width="formLabelWidth" style="display: none;">-->
+                      <!--                      头像上传-->
+                      <!--                  <el-upload-->
+                      <!--                    class="avatar-uploader"-->
+                      <!--                    action="http://localhost:9090/#/file/upload"-->
+                      <!--                    :show-file-list="false"-->
+                      <!--                    :on-success="handleAvatarSuccess"-->
+                      <!--                    :before-upload="beforeAvatarUpload">-->
+                      <!--                    <img v-if="imageUrl" :src="imageUrl" class="avatar">-->
+                      <!--                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
+                      <!--                  </el-upload>-->
+
+<!--                      <el-input v-model="reform.avatar" value="http://localhost:9090/file/getfile/58139dcbf34c47eda646ef67b0ca33b7.jpg" type="text" autocomplete="off"></el-input>-->
+<!--                    </el-form-item>-->
+
+
+                  </el-form>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="regDialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="registe">提 交</el-button>
+                  </div>
+                </el-dialog>
 
               </div>
               <!--               头像-->
-<!--              <div class="navbar-btn navbar-btn-dynamic navbar-fl" v-if="getIsLogin">-->
+              <!--              <div class="navbar-btn navbar-btn-dynamic navbar-fl" v-if="getIsLogin">-->
 
-<!--                <div class="demo-image">-->
-<!--                  <div class="block" v-for="fit in fits" :key="fit">-->
-<!--                    <el-image-->
-<!--                      style="width: 45px; height: 45px; border-radius: 50%"-->
-<!--                      :src="getUserImg"-->
-<!--                      :fit="fit"></el-image>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
+              <!--                <div class="demo-image">-->
+              <!--                  <div class="block" v-for="fit in fits" :key="fit">-->
+              <!--                    <el-image-->
+              <!--                      style="width: 45px; height: 45px; border-radius: 50%"-->
+              <!--                      :src="getUserImg"-->
+              <!--                      :fit="fit"></el-image>-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </div>-->
 
               <!-- 动态 -->
               <div class="navbar-btn navbar-btn-dynamic navbar-fl" @click.prevent="stat">
@@ -179,26 +237,39 @@ export default {
     return {
       opacity: 1,
       display: 'none',
-      user: JSON.parse(window.sessionStorage.getItem('user')),
-      keywords:'',
+      user: JSON.parse(localStorage.getItem('user')),
+      keywords: '',
       dialogFormVisible: false,//表单
-      form: { //表单
+      regDialogFormVisible: false,//注册表单
+      form: { //登录表单
         userName: '',
         password: '',
       },
-      rules:{//表单验证
+      reform: {//注册表单
+        userName: '',
+        nickName: '',
+        password: '',
+        email: '',
+        phonenumber:'',
+        address:'',
+        sex: '0',
+        avatar:'http://localhost:9090/file/getfile/58139dcbf34c47eda646ef67b0ca33b7.jpg'
+      },
+      rules: {//登录表单验证
         userName: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 5,max: 15,message: '长度在5到15个字符',trigger: 'blur'}
+          {required: true, message: '请输入用户名', trigger: 'blur'},
+          {min: 5, max: 15, message: '长度在5到15个字符', trigger: 'blur'}
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 5,max: 20,message: '长度在5到20个字符',trigger: 'blur'}
+          {required: true, message: '请输入密码', trigger: 'blur'},
+          {min: 5, max: 20, message: '长度在5到20个字符', trigger: 'blur'}
         ],
       },
+      reRules: { //注册表单验证
+
+      },
       formLabelWidth: '120px',
-      fits: ['fill'], //头像
-      visible: false, //头像弹出框
+      imageUrl: '', //上传头像url
     }
   },
   methods: {
@@ -222,32 +293,32 @@ export default {
     userinfo() {
       this.$router.push('/tabs/' + '1')
     },
-    myCollection(){
+    myCollection() {
       this.$router.push('/collection')
     },
-    search(){
+    search() {
       const keywords = this.keywords;
-      if (keywords !== ''){
-        this.$router.push({path:`/search/keywords/${keywords}`})
+      if (keywords !== '') {
+        this.$router.push({path: `/search/keywords/${keywords}`})
         this.keywords = ''
       }
     },
-    stat(){
+    stat() {
       this.$router.push('/stat')
     },
-    information(){
+    information() {
       this.$router.push('/information')
     },//我的方法
-    login(){//登录的方法
-      this.$refs['userForm'].validate((valid)=>{
-        if (valid){ //表单校验合法
+    login() {//登录的方法
+      this.$refs['userForm'].validate((valid) => {
+        if (valid) { //表单校验合法
           this.request.post("/user/login", this.form).then(res => {
-            if(res.data.code== '200') {
-              localStorage.setItem("user",JSON.stringify(res.data.data)) //存储token信息到浏览器
+            if (res.data.code == '200') {
+              localStorage.setItem("user", JSON.stringify(res.data.data)) //存储token信息到浏览器
               this.$message.success("登录成功")
-              this.$store.state.isLogin=true //设置登录成功标志
+              this.$store.state.isLogin = true //设置登录成功标志
               //把头像存入vuex
-              this.$store.state.userimg=res.data.data.avatar
+              this.$store.state.userimg = res.data.data.avatar
               this.$router.push("/")
             } else {
               this.$message.error(res.data.msg)
@@ -263,20 +334,75 @@ export default {
         console.log(res)
         //清空所有缓存
         window.sessionStorage.clear()
-        this.$store.state.isLogin=false;
-        this.$store.state.userimg='';
+        this.$store.state.isLogin = false;
+        this.$store.state.userimg = '';
+        //移除user对象
         localStorage.removeItem("user")
+        this.$message.success("退出登录成功")
       })
       // location.reload()       //刷新页面
-    }
+    },
+    registe() { //注册的方法
+      console.log(this.reform)
+
+      this.request.post("/user/register", this.reform).then(res => {
+        if (res.data.code == '200') {
+          this.$message.success("注册成功")
+          this.reform={//初始化注册表单
+            userName: '',
+            nickName: '',
+            password: '',
+            email: '',
+            phonenumber:'',
+            address:'',
+            sex: '0',
+            avatar:'http://localhost:9090/file/getfile/58139dcbf34c47eda646ef67b0ca33b7.jpg'
+          }
+          this.regDialogFormVisible=false
+          this.$router.push("/")
+        } else {
+          this.$message.error(res.data.msg)
+        }
+      })
+
+    },
+    getByIsLogin() { //判断是否登录
+      let user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null
+      if (user == null) {
+        this.$store.state.isLogin = false
+        this.$store.state.userimg = ''
+      } else {
+        this.$store.state.isLogin = true
+        this.$store.state.userimg = user.avatar
+      }
+    },//头像上传的方法
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+
   },//计算属性
-  computed:{
-    getUserImg(){ //获取用户头像的计算属性
+  computed: {
+    getUserImg() { //获取用户头像的计算属性
       return this.$store.state.userimg
     },
-    getIsLogin(){ //获取是否登录
+    getIsLogin() { //获取是否登录
       return this.$store.state.isLogin
     }
+  },
+  created() {
+    this.getByIsLogin()
   }
 }
 </script>
@@ -643,5 +769,33 @@ a {
 
 .write:hover {
   cursor: pointer;
+}
+
+/*头像上传*/
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

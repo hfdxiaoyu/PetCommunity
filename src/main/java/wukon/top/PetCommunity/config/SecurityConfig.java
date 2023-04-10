@@ -55,8 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // permitAll()无论是否登录都可以去访问
 //                .antMatchers("/hello").permitAll()
                 .antMatchers("/user/login").anonymous()
+                //放行注册接口
+                .antMatchers("/user/register").anonymous()
                 //这个接口需要哪些权限可以访问
-                .antMatchers("/user/*").hasAuthority("system:admin:list")
+                .antMatchers("/user/*").hasAnyAuthority("system:admin:list","system:user:list")
                 //文件下载目录都可以访问
                 .antMatchers("/file/getfile/*").permitAll()
                 .antMatchers("/bbsContent/page/*").permitAll() //放行所有文章页
