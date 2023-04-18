@@ -5,10 +5,10 @@
 
     </div>
 
-    <div style="text-align: center;width: 70%;display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;">
+    <div style="text-align: center;width: 70%;display: grid; grid-template-columns: repeat(4,1fr);">
       <div style="height: 600px;">
         <!-- 滚动加载    -->
-        <ul class="infinite-list" v-infinite-scroll="load" infinite-scroll-distance="300" style="height:600px;overflow:auto;list-style-type:none; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
+        <ul class="infinite-list" v-infinite-scroll="load" infinite-scroll-distance="300" style="height:600px;overflow:auto;list-style-type:none; display: grid; grid-template-columns: repeat(5,1fr); gap: 10px;">
           <li v-for="i in contentList" class="infinite-list-item">
 
             <!-- 卡片显示论坛内容     -->
