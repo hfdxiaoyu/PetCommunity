@@ -1,9 +1,11 @@
 package wukon.top.PetCommunity.service.impl;
 
+import cn.hutool.core.date.LocalDateTimeUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import wukon.top.PetCommunity.domain.BbsContent;
@@ -15,7 +17,13 @@ import wukon.top.PetCommunity.mapper.BbsContentMapper;
 import org.springframework.stereotype.Service;
 import wukon.top.PetCommunity.util.ResponseResult;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
 * @author 13069
@@ -24,6 +32,7 @@ import java.util.List;
 */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BbsContentServiceImpl extends ServiceImpl<BbsContentMapper, BbsContent>
     implements BbsContentService{
 
@@ -33,6 +42,7 @@ public class BbsContentServiceImpl extends ServiceImpl<BbsContentMapper, BbsCont
     @Override
     public ResponseResult queryIndexContentListPaged(Integer pageNum, Integer pageSize) {
         List<IndexContent> indexContents = indexContentMapper.queryIndexContentListPaged(pageNum, pageSize);
+
         //封装进分页对象
         Page page = new Page();
         page.setRecords(indexContents);

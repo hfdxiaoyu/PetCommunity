@@ -391,7 +391,20 @@ export default {
       }
       return isJPG && isLt2M;
     },
-
+    // getFormatDate(oldDate){//获得格式化的日期
+    //   //对传进来的数据进行解析
+    //   var split1 = oldDate.split('T');
+    //   //把年月日分离出来
+    //   var split2 = split1[0].split('-')
+    //   //把时间分离出来
+    //   var split3 = split1[1].split(':')
+    //   //初始化date对象
+    //   var date1 = new Date(split2[0],split2[1],split2[2],split3[0],split3[1],split3[2].substr(0,2),split3[3]);
+    //
+    //   console.log("构建出来的日期：",date1)
+    //   // console.log('年:',date1.getFullYear(),'月:',date1.getMonth(),'日：',date1.getDay())
+    //   return date1
+    // }
   },//计算属性
   computed: {
     getUserImg() { //获取用户头像的计算属性
@@ -403,6 +416,7 @@ export default {
   },
   created() {
     this.getByIsLogin()
+    // this.getFormatDate('2023-03-20T20:06:44.000+00:00')
   }
 }
 </script>

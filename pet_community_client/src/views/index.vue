@@ -28,8 +28,8 @@
                   <div class="card_head_div">
                     访问量：{{i.viewCount}}
                   </div>
-                  <div class="card_head_div">
-                    创建时间：{{i.createtime}}
+                  <div class="card_head_div" v-if="i.createtime != null">
+                    创建时间：{{creDateFormat(i.createtime)}}
                   </div>
                   <div class="card_head_div">
                     <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
@@ -40,7 +40,15 @@
               <div class="text item">
                 <div  style="display: flex;flex-direction: row">
                   <div>
-                    <img :src="i.img" style="width: 200px;height: 200px;">
+<!--                    <img :src="i.img" style="width: 200px;height: 200px;">-->
+                    <div class="demo-image">
+                      <div class="block" v-for="fit in fits" :key="fit">
+                        <el-image
+                          style="width: 200px; height: 200px"
+                          :src="i.img"
+                          :fit="fit"></el-image>
+                      </div>
+                    </div>
                   </div>
                   <div>
                     {{i.content}}
@@ -66,6 +74,8 @@
 </template>
 
 <script>
+import util1 from '../utils/util1.js'
+
 export default {
   name: "index",
   data () {
@@ -76,7 +86,8 @@ export default {
       total: 1,
       //是否还有
       hasMore: true,
-      count: 0
+      count: 0,
+      fits:['scale-down']
     }
   },
   methods: {
@@ -107,7 +118,6 @@ export default {
         console.log("我也是有底线的哦")
       }
 
-
       this.pageNum += 1
       // console.log("显示内容数据：",this.contentList[0].content)
       // console.log("拼接后的数据：",this.contentList)
@@ -120,12 +130,17 @@ export default {
         this.hasMore = false;
       else
         this.hasMore = true;
+    },
+    creDateFormat(date){//对时间进行格式化处理
+      var date1 = util1.dateFormatStr(date);
+      return date1
     }
 
   },//初始化页面时请求的参数
   created() {
     //调用加载的方法
     this.load()
+
   }
 }
 </script>

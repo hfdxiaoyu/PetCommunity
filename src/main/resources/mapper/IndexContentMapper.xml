@@ -10,6 +10,7 @@
                u.id as user_id,u.user_name,u.nick_name,u.avatar,b.id as content_id,b.title,b.content,b.img,b.view_count,b.createtime
         FROM bbs_content b,user u
         WHERE b.user_id = u.id
+        order by b.view_count desc
     </select>
     <select id="countAllDate" resultType="java.lang.Integer">
         SELECT COUNT(b.id)
