@@ -40,8 +40,8 @@ public class BbsContentServiceImpl extends ServiceImpl<BbsContentMapper, BbsCont
     private final IndexContentMapper indexContentMapper;
 
     @Override
-    public ResponseResult queryIndexContentListPaged(Integer pageNum, Integer pageSize) {
-        List<IndexContent> indexContents = indexContentMapper.queryIndexContentListPaged(pageNum, pageSize);
+    public ResponseResult queryIndexContentListPaged(Integer pageNum, Integer pageSize,String theme,String pet) {
+        List<IndexContent> indexContents = indexContentMapper.queryIndexContentListPaged(pageNum, pageSize,theme,pet);
 
         //封装进分页对象
         Page page = new Page();

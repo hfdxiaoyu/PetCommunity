@@ -218,7 +218,26 @@
     <div style="min-height: 48px;display: flex;flex-direction: row;">
       <div style="width: 15%"></div>
       <div>
-        我是宠物标签
+        <ul class="left-ul">
+          <li title="">
+            <router-link active-class="active" to="/"> 银渐层</router-link>
+          </li>
+          <li title="">
+            <router-link active-class="active" to="/forum"> 柯基</router-link>
+          </li>
+          <li title="">
+            <router-link active-class="active" to="/community"> 布偶</router-link>
+          </li>
+          <li title="">
+            <router-link active-class="active" to="/inventory"> 金毛</router-link>
+          </li>
+          <li title="">
+            <router-link active-class="active" to="/inventory"> 阿拉斯加</router-link>
+          </li>
+          <li title="">
+            <router-link active-class="active" to="/inventory"> 蓝猫</router-link>
+          </li>
+        </ul>
       </div>
       <div style="width: 15%"></div>
     </div>

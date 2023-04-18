@@ -30,7 +30,7 @@ class PetCommunityApplicationTests {
 	  */
 	@Test
 	void testContentIndex(){
-		List<IndexContent> indexContents = indexContentMapper.queryIndexContentListPaged(2, 5);
+		List<IndexContent> indexContents = indexContentMapper.queryIndexContentListPaged(2, 5,"银渐层","宠物相亲");
 		indexContents.forEach(System.out::println);
 //		Page<IndexContent> indexContents = PageHelper.startPage(1, 5);
 

@@ -7,9 +7,17 @@
 
     <select id="queryIndexContentListPaged" resultType="wukon.top.PetCommunity.domain.po.IndexContent">
         SELECT
-               u.id as user_id,u.user_name,u.nick_name,u.avatar,b.id as content_id,b.title,b.content,b.img,b.view_count,b.createtime
-        FROM bbs_content b,user u
+            DISTINCT u.id as user_id,u.user_name,u.nick_name,u.avatar,b.id as content_id,b.title,b.content,b.img,b.view_count,b.createtime
+        FROM bbs_content b,user u <if test="pet != ''">,bbs_pet bp,bbs_pet_content bpc</if>
+        <if test="theme != ''">,bbs_theme bt,bbs_theme_content btc</if>
         WHERE b.user_id = u.id
+        <if test="pet != ''">
+            and bp.petname=#{pet} and bp.id = bpc.pet_id and bpc.content_id = b.id
+        </if>
+
+        <if test="theme != ''">
+            and btc.content_id = b.id and bt.id = btc.theme_id and bt.title=#{theme}
+        </if>
         order by b.view_count desc
     </select>
     <select id="countAllDate" resultType="java.lang.Integer">

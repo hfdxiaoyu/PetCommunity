@@ -11,6 +11,6 @@ import wukon.top.PetCommunity.util.ResponseResult;
 */
 public interface BbsContentService extends IService<BbsContent> {
 
-    ResponseResult queryIndexContentListPaged(Integer pageNum,Integer pageSize);
+    ResponseResult queryIndexContentListPaged(Integer pageNum,Integer pageSize,String theme,String pet);
 
 }

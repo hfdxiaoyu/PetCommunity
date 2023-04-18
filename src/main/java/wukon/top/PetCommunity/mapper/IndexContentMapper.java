@@ -20,7 +20,7 @@ public interface IndexContentMapper{
     /**
       *功能描述：分页查询首页信息
       */
-    List<IndexContent> queryIndexContentListPaged(Integer pageNum,Integer pageSize);
+    List<IndexContent> queryIndexContentListPaged(Integer pageNum,Integer pageSize,String theme,String pet);
 
     //计算所有条数
     int countAllDate();

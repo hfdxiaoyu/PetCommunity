@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import wukon.top.PetCommunity.domain.BbsContent;
-import wukon.top.PetCommunity.domain.User;
 import wukon.top.PetCommunity.enums.StatusCodeEnum;
 import wukon.top.PetCommunity.service.BbsContentService;
 import wukon.top.PetCommunity.util.ResponseResult;
@@ -58,13 +57,17 @@ public class BbsContentController {
     /**
       *功能描述：首页的接口
       *@param: pageNum pageSize
+     * @param theme 主题名字
+     * @param pet 动物名字
       *@return: ResponseResult
       */
     @GetMapping("/indexPage")
     public ResponseResult indexPage(@RequestParam Integer pageNum,
-                                    @RequestParam Integer pageSize){
+                                    @RequestParam Integer pageSize,
+                                    @RequestParam(defaultValue = "") String theme,
+                                    @RequestParam(defaultValue = "") String pet){
 
-        return bbsContentService.queryIndexContentListPaged(pageNum,pageSize);
+        return bbsContentService.queryIndexContentListPaged(pageNum,pageSize,theme,pet);
     }
 
     /**
