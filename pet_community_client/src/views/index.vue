@@ -1,14 +1,14 @@
 <template>
   <div style="text-align: center;width: 100%;display: flex;flex-direction: row;">
     <!-- 盒子一   -->
-    <div style="width: 15%;">
+    <div style="width: 10%;">
 
     </div>
 
-    <div style="text-align: center;width: 70%;flex-direction: column-reverse;">
+    <div style="text-align: center;width: 70%;display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;">
       <div style="height: 600px;">
         <!-- 滚动加载    -->
-        <ul class="infinite-list" v-infinite-scroll="load" infinite-scroll-distance="300" style="height:600px;overflow:auto;list-style-type:none;">
+        <ul class="infinite-list" v-infinite-scroll="load" infinite-scroll-distance="300" style="height:600px;overflow:auto;list-style-type:none; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
           <li v-for="i in contentList" class="infinite-list-item">
 
             <!-- 卡片显示论坛内容     -->
@@ -23,22 +23,25 @@
                     <img class="card_head_photo" :src="i.avatar" style="border-radius: 50%;height: 35px;width: 35px;"/>
                   </div>
                   <div class="card_head_div">
-                    <span>{{i.nickName}}</span>
+                    <span><p style="font-size: 10px;">{{i.nickName}}</p></span>
                   </div>
                   <div class="card_head_div">
-                    访问量：{{i.viewCount}}
+                    <i class="el-icon-view"></i>
+                  </div>
+                  <div class="card_head_div">
+                    <p style="font-size: 10px;">{{i.viewCount}}</p>
                   </div>
                   <div class="card_head_div" v-if="i.createtime != null">
-                    创建时间：{{creDateFormat(i.createtime)}}
+                    <p style="font-size: 3px;"> {{creDateFormat(i.createtime)}} </p>
                   </div>
-                  <div class="card_head_div">
-                    <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-                  </div>
+<!--                  <div class="card_head_div">-->
+<!--                    <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>-->
+<!--                  </div>-->
                 </div>
 
               </div>
               <div class="text item">
-                <div  style="display: flex;flex-direction: row">
+                <div  style="display: flex;flex-direction: column">
                   <div>
 <!--                    <img :src="i.img" style="width: 200px;height: 200px;">-->
                     <div class="demo-image">
@@ -51,7 +54,9 @@
                     </div>
                   </div>
                   <div>
-                    {{i.content}}
+                    <p style="font-size: 3px;">
+                      {{i.content}}
+                    </p>
                   </div>
 
                 </div>
@@ -67,7 +72,7 @@
     </div>
 
     <!--  盒子三  -->
-    <div style="width: 15%;">
+    <div style="width: 10%;">
 
     </div>
   </div>
@@ -164,6 +169,7 @@ export default {
 }
 
 .box-card {
+  padding: 3px 5px;
   width: 99%;
 }
 /*取消去掉点之后的空白*/
@@ -188,6 +194,17 @@ ul,li{
 .card_head_div{
   height: 35px;
   padding: 3px 5px;
-  text-align: center;
+  /*text-align: center;*/
+  display: flex;
+  /*实现水平居中*/
+  justify-content: center;
+  /*实现垂直居中*/
+  align-items: center;
+}
+
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
