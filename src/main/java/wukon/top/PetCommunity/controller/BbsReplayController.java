@@ -40,13 +40,14 @@ public class BbsReplayController {
      */
     @GetMapping("/page")
     public ResponseResult findPage(@RequestParam Integer pageNum,
-                                   @RequestParam Integer pageSize)
+                                   @RequestParam Integer pageSize,
+                                   @RequestParam(defaultValue = "") String articleId)
     {
         IPage<BbsReplay> page = new Page<>(pageNum,pageSize);
         QueryWrapper<BbsReplay> queryWrapper = new QueryWrapper<>();
-
+        queryWrapper.like("article_id",articleId);
         //根据id倒序
-        queryWrapper.orderByDesc("id");
+//        queryWrapper.orderByDesc("id");
         IPage<BbsReplay> BbsReplayIPage = bbsReplayService.page(page, queryWrapper);
 
         return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), BbsReplayIPage);

@@ -45,7 +45,7 @@ public class ChattingRecordsController {
         QueryWrapper<ChattingRecords> queryWrapper = new QueryWrapper<>();
 
         //根据id倒序
-        queryWrapper.orderByDesc("id");
+//        queryWrapper.orderByDesc("id");
         IPage<ChattingRecords> ChattingRecordsIPage = chattingRecordsService.page(page, queryWrapper);
 
         return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), ChattingRecordsIPage);

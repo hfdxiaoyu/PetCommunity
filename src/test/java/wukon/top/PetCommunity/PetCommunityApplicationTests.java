@@ -41,4 +41,9 @@ class PetCommunityApplicationTests {
 	void testContentIndexService(){
 		System.out.println(indexContentMapper.countAllDate());
 	}
+
+	@Test
+	void testOneIndexContent(){
+		System.out.println(indexContentMapper.queryOneIndexContent(1));
+	}
 }

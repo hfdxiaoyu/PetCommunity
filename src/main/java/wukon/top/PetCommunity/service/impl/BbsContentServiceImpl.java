@@ -50,6 +50,13 @@ public class BbsContentServiceImpl extends ServiceImpl<BbsContentMapper, BbsCont
         return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), StatusCodeEnum.SUCCESS.getMsg(),page);
     }
 
+    @Override
+    public ResponseResult queryOneIndexContent(Integer contentId) {
+        IndexContent indexContent = indexContentMapper.queryOneIndexContent(contentId);
+
+        return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), StatusCodeEnum.SUCCESS.getMsg(),indexContent);
+    }
+
 }
 
 

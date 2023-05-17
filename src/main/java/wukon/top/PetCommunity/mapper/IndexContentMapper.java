@@ -24,4 +24,10 @@ public interface IndexContentMapper{
 
     //计算所有条数
     int countAllDate();
+    /**
+      *功能描述：根据文章id查询文章信息
+      *@param: contentId
+      *@return: IndexContent
+      */
+    IndexContent queryOneIndexContent(Integer contentId);
 }

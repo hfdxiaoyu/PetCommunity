@@ -68,6 +68,11 @@ public class BbsContentController {
         return bbsContentService.queryIndexContentListPaged(pageNum,pageSize,theme,pet);
     }
 
+    @GetMapping("/getOneContent/{contentid}")
+    public ResponseResult getOneContent(@PathVariable Integer contentid){
+        return bbsContentService.queryOneIndexContent(contentid);
+    }
+
     /**
      *功能描述：新增帖子
      *@return: Integer

@@ -26,6 +26,12 @@
         WHERE b.user_id = u.id
     </select>
 
+    <select id="queryOneIndexContent" resultType="wukon.top.PetCommunity.domain.po.IndexContent">
+        SELECT u.id as user_id,u.user_name,u.nick_name,u.avatar,b.id as content_id,b.title,b.content,b.img,b.view_count,b.createtime
+        FROM bbs_content b,user u
+        WHERE b.user_id = u.id and b.id = #{contentId}
+    </select>
+
     <!-- autoMapping自动映射   -->
     <resultMap id="BaseResultMap" type="wukon.top.PetCommunity.domain.po.IndexContent" autoMapping="true">
         <result column="user_id" property="userId" jdbcType="BIGINT"/>

@@ -57,6 +57,7 @@
                     <p style="font-size: 3px;">
                       {{i.content}}
                     </p>
+                    <i class="el-icon-chat-line-square" @click="toPetDetails(i.contentId)"></i>
                   </div>
 
                 </div>
@@ -92,7 +93,8 @@ export default {
       //是否还有
       hasMore: true,
       count: 0,
-      fits:['scale-down']
+      fits:['scale-down'],
+      theme: this.$store.state.theme
     }
   },
   methods: {
@@ -106,6 +108,7 @@ export default {
           params:{
             pageNum:this.pageNum,
             pageSize:this.pageSize,
+            theme : this.getThemUrl,
           }
         }).then(
           res => {
@@ -139,6 +142,18 @@ export default {
     creDateFormat(date){//对时间进行格式化处理
       var date1 = util1.dateFormatStr(date);
       return date1
+    },
+    toPetDetails(contenid){ //跳转文章详细信息页面
+        if (this.$store.state.isLogin){
+           //带参数route跳转
+          this.$router.push({
+            path:'/petDetails',
+            query:{
+              contenid:contenid
+            }
+          })
+        } else
+          this.$message.error("登录后才可以查看帖子详细信息")
     }
 
   },//初始化页面时请求的参数
@@ -146,7 +161,26 @@ export default {
     //调用加载的方法
     this.load()
 
+  },
+  computed:{
+    getThemUrl() {
+      //不为空返回url为空返回空
+      console.log(this.theme)
+      return this.$store.state.theme
+    }
+  },
+  watch:{ //监听属性
+    theme:{
+      //初次加载就监听
+      immediate:true,
+      handler(newVal,oldVal){
+        console.log("我加载啦")
+        this.load()
+      }
+
+    }
   }
+
 }
 </script>
 

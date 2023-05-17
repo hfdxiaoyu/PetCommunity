@@ -13,4 +13,10 @@ public interface BbsContentService extends IService<BbsContent> {
 
     ResponseResult queryIndexContentListPaged(Integer pageNum,Integer pageSize,String theme,String pet);
 
+    /**
+      *功能描述：根据内容id，查询宠物内容
+      *@param: contentId
+      *@return: ResponseResult
+      */
+    ResponseResult queryOneIndexContent(Integer contentId);
 }

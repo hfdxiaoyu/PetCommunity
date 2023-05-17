@@ -16,24 +16,24 @@
             <!-- 左侧导航栏 -->
             <ul class="left-ul">
               <li title="">
-                <router-link active-class="active" to="/"> 首页</router-link>
+                <router-link active-class="active" to="/in"> 首页</router-link>
               </li>
-              <li title="">
-                <router-link active-class="active" to="/forum"> 宠物相亲</router-link>
+              <li title="" @click="getThem('宠物相亲')">
+                <router-link active-class="active" to="#" > 宠物相亲</router-link>
               </li>
-              <li title="">
-                <router-link active-class="active" to="/community"> 宠物社交</router-link>
+              <li title="" @click="getThem('宠物社交')">
+                <router-link active-class="active" to="#"> 宠物社交</router-link>
               </li>
-              <li title="">
-                <router-link active-class="active" to="/inventory"> 宠物代管</router-link>
-              </li>
-
-              <li title="">
-                <router-link active-class="active" to="/inventory"> 代遛</router-link>
+              <li title="" @click="getThem('宠物代管')">
+                <router-link active-class="active" to="#"> 宠物代管</router-link>
               </li>
 
-              <li title="">
-                <router-link active-class="active" to="/inventory"> 互助</router-link>
+              <li title="" @click="getThem('代遛')">
+                <router-link active-class="active" to="#"> 代遛</router-link>
+              </li>
+
+              <li title="" @click="getThem('互助')">
+                <router-link active-class="active" to="#"> 互助</router-link>
               </li>
             </ul>
 
@@ -410,20 +410,10 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    // getFormatDate(oldDate){//获得格式化的日期
-    //   //对传进来的数据进行解析
-    //   var split1 = oldDate.split('T');
-    //   //把年月日分离出来
-    //   var split2 = split1[0].split('-')
-    //   //把时间分离出来
-    //   var split3 = split1[1].split(':')
-    //   //初始化date对象
-    //   var date1 = new Date(split2[0],split2[1],split2[2],split3[0],split3[1],split3[2].substr(0,2),split3[3]);
-    //
-    //   console.log("构建出来的日期：",date1)
-    //   // console.log('年:',date1.getFullYear(),'月:',date1.getMonth(),'日：',date1.getDay())
-    //   return date1
-    // }
+    getThem(them){
+      console.log('我运行啦，主题是：',them)
+      this.$store.state.theme=them
+    }
   },//计算属性
   computed: {
     getUserImg() { //获取用户头像的计算属性
@@ -432,6 +422,7 @@ export default {
     getIsLogin() { //获取是否登录
       return this.$store.state.isLogin
     }
+
   },
   created() {
     this.getByIsLogin()

@@ -14,6 +14,10 @@ export default new Router({
       path: '/in',
       name: 'index',
       component: ()=>import('../views/index')
+    },{
+      path: '/petDetails',
+      name: 'petDetails',
+      component: ()=>import('../views/petDetails')
     }
   ]
 })
