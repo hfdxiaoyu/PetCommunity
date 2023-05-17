@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentVo {
+public class CommentPo {
     private Long id;
 
     //文章id
@@ -35,5 +35,5 @@ public class CommentVo {
 
     private String username;
 
-    private List<CommentVo> children;
+    private List<CommentPo> children;
 }

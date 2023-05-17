@@ -19,11 +19,15 @@
       {{ this.oneContent.content }}
     </div>
 
+    <div>
+      <pet-message></pet-message>
+    </div>
   </div>
 </template>
 
 <script>
 import util1 from '../utils/util1.js'
+import message from "./message";
 
 export default {
   name: "petDetails",
@@ -74,6 +78,9 @@ export default {
   },
   created() {
     this.load()
+  },
+  components:{ //定义组件
+    'pet-message':message,
   }
 
 }

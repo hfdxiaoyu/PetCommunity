@@ -2,6 +2,7 @@ package wukon.top.PetCommunity.service;
 
 import wukon.top.PetCommunity.domain.BbsReplay;
 import com.baomidou.mybatisplus.extension.service.IService;
+import wukon.top.PetCommunity.util.ResponseResult;
 
 /**
 * @author 13069
@@ -10,4 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface BbsReplayService extends IService<BbsReplay> {
 
+    ResponseResult commentList(Long articleIdm, Integer pageNum, Integer pageSize);
+
+    ResponseResult addComment(BbsReplay bbsReplay);
 }

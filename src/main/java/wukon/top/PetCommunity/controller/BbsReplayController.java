@@ -54,6 +54,20 @@ public class BbsReplayController {
     }
 
     /**
+      *功能描述：根据文章id查询评论信息
+      *@param articleId 文章id
+     * @param pageNum  页数
+     * @param pageSize  每一页大小
+      *@return: ResponseResult
+      */
+    @GetMapping("/replayList")
+    public ResponseResult replayList(@RequestParam Long articleId,
+                                     @RequestParam Integer pageNum,
+                                     @RequestParam Integer pageSize){
+        return bbsReplayService.commentList(articleId,pageNum,pageSize);
+    }
+
+    /**
      *功能描述：新增权限信息
      *@return: Integer
      */
