@@ -18,6 +18,10 @@ export default new Router({
       path: '/petDetails',
       name: 'petDetails',
       component: ()=>import('../views/petDetails')
+    },{
+      path:'/write',
+      name:'write',
+      component:()=>import('../views/BBSArticleWrite')
     }
   ]
 })
