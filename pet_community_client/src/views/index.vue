@@ -95,11 +95,15 @@ export default {
       count: 0,
       fits:['scale-down'],
       theme: '', //主题
+      pet: '',//宠物标签
     }
   },
   methods: {
     //鼠标滑动加载数据的方法
-    load () {
+    load (them,pet) {
+      //给自动加载的方法用
+      them=this.theme
+      pet=this.pet
       //判断是否到底
       this.isHasMore()
 
@@ -108,7 +112,8 @@ export default {
           params:{
             pageNum:this.pageNum,
             pageSize:this.pageSize,
-            theme : this.$store.state.theme,
+            theme : them,
+            pet : pet,
           }
         }).then(
           res => {
@@ -155,20 +160,32 @@ export default {
           })
         } else
           this.$message.error("登录后才可以查看帖子详细信息")
+    },
+    reloadInit(){ //标签改变后重置页面参数
+      this.contentList=[] //初始化页面数组
+      this.pageNum= 1
+      this.pageSize= 3
+      this.total=1
     }
 
   },//初始化页面时请求的参数
   created() {
     //调用加载的方法
-    this.load()
+    this.load(this.theme,this.pet)
 
   },
   computed:{
     getThemUrl() {
+      this.reloadInit()
       //不为空返回url为空返回空
       console.log('我是计算属性监听到的them:',this.$store.state.theme)
       this.theme=this.$store.state.theme
       return this.$store.state.theme
+    },
+    getPetValue(){
+      this.reloadInit()
+      this.pet=this.$store.state.pet
+      return this.$store.state.pet
     }
   },
   watch:{ //监听属性
@@ -177,9 +194,16 @@ export default {
       immediate:true,
       handler(newVal,oldVal){
         console.log("监听到数据，我加载啦,数据是：",this.$store.state.theme)
-        this.load()
+        this.load(this.theme,this.pet)
       }
 
+    },
+    getPetValue:{
+      immediate:true,
+      handler(newVal,oldVal){
+        console.log("监听到数据，我加载啦,数据是：",this.$store.state.pet)
+        this.load(this.theme,this.pet)
+      }
     }
   }
 

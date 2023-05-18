@@ -16,7 +16,7 @@
             <!-- 左侧导航栏 -->
             <ul class="left-ul">
               <li title="">
-                <router-link active-class="active" to="/in"> 首页</router-link>
+                <p class="active" @click="toindex">首页</p>
               </li>
               <li title="" @click="getThem('宠物相亲')">
 <!--                <router-link active-class="active" to="#" > 宠物相亲</router-link>-->
@@ -27,15 +27,18 @@
                 <p class="active">宠物社交</p>
               </li>
               <li title="" @click="getThem('宠物代管')">
-                <router-link active-class="active" to="#"> 宠物代管</router-link>
+<!--                <router-link active-class="active" to="#"> 宠物代管</router-link>-->
+                <p class="active">宠物代管</p>
               </li>
 
               <li title="" @click="getThem('代遛')">
-                <router-link active-class="active" to="#"> 代遛</router-link>
+<!--                <router-link active-class="active" to="#"> 代遛</router-link>-->
+                <p class="active">代遛</p>
               </li>
 
               <li title="" @click="getThem('互助')">
-                <router-link active-class="active" to="#"> 互助</router-link>
+<!--                <router-link active-class="active" to="#"> 互助</router-link>-->
+                <p class="active">互助</p>
               </li>
             </ul>
 
@@ -222,22 +225,24 @@
       <div>
         <ul class="left-ul">
           <li title="">
-            <router-link active-class="active" to="/"> 银渐层</router-link>
+<!--            <router-link active-class="active" to="/"> 银渐层</router-link>-->
+            <p class="active" @click="getPet('银渐层')">银渐层</p>
           </li>
           <li title="">
-            <router-link active-class="active" to="/forum"> 柯基</router-link>
+<!--            <router-link active-class="active" to="/forum"> 柯基</router-link>-->
+            <p class="active" @click="getPet('柯基')">柯基</p>
           </li>
           <li title="">
-            <router-link active-class="active" to="/community"> 布偶</router-link>
+            <p class="active" @click="getPet('布偶')">布偶</p>
           </li>
           <li title="">
-            <router-link active-class="active" to="/inventory"> 金毛</router-link>
+            <p class="active" @click="getPet('金毛')">金毛</p>
           </li>
           <li title="">
-            <router-link active-class="active" to="/inventory"> 阿拉斯加</router-link>
+            <p class="active" @click="getPet('阿拉斯加')">阿拉斯加</p>
           </li>
           <li title="">
-            <router-link active-class="active" to="/inventory"> 蓝猫</router-link>
+            <p class="active" @click="getPet('蓝猫')">蓝猫</p>
           </li>
         </ul>
       </div>
@@ -412,9 +417,16 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    getThem(them){
+    getThem(them){ //获取主题
       // console.log('我运行啦，主题是：',them)
       this.$store.state.theme=them
+    },
+    getPet(pet){ //获取宠物标签
+      this.$store.state.pet=pet
+    },
+    toindex(){ //加载首页数据
+      this.$store.state.theme=''
+      this.$store.state.pet=''
     }
   },//计算属性
   computed: {
