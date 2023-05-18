@@ -19,10 +19,12 @@
                 <router-link active-class="active" to="/in"> 首页</router-link>
               </li>
               <li title="" @click="getThem('宠物相亲')">
-                <router-link active-class="active" to="#" > 宠物相亲</router-link>
+<!--                <router-link active-class="active" to="#" > 宠物相亲</router-link>-->
+                <p class="active"> 宠物相亲</p>
               </li>
               <li title="" @click="getThem('宠物社交')">
-                <router-link active-class="active" to="#"> 宠物社交</router-link>
+<!--                <router-link active-class="active" to="#"> 宠物社交</router-link>-->
+                <p class="active">宠物社交</p>
               </li>
               <li title="" @click="getThem('宠物代管')">
                 <router-link active-class="active" to="#"> 宠物代管</router-link>
@@ -411,7 +413,7 @@ export default {
       return isJPG && isLt2M;
     },
     getThem(them){
-      console.log('我运行啦，主题是：',them)
+      // console.log('我运行啦，主题是：',them)
       this.$store.state.theme=them
     }
   },//计算属性
@@ -501,6 +503,15 @@ export default {
 }
 
 .left-ul li a {
+  color: #000;
+  padding: 0 20px;
+  text-decoration: none;
+  font: 16px Arial, Helvetica, sans-serif;
+  /*font: normal 28px Cookie, Arial, Helvetica, sans-serif;*/
+  opacity: 0.9;
+}
+
+.left-ul li p {
   color: #000;
   padding: 0 20px;
   text-decoration: none;

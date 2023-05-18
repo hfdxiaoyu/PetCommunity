@@ -13,5 +13,5 @@ public interface BbsReplayService extends IService<BbsReplay> {
 
     ResponseResult commentList(Long articleIdm, Integer pageNum, Integer pageSize);
 
-    ResponseResult addComment(BbsReplay bbsReplay);
+    ResponseResult addComment(BbsReplay bbsReplay) throws Exception;
 }

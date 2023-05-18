@@ -93,9 +93,10 @@
                 textarea: '',//文本框输入内容
                 pBody:true,//表情打开控制
                 commentList:[],//评论列表数据
-                aid:0,//文章id
+                aid: this.$route.query.contenid,//文章id
                 hasMore:false,
                 haslogin:true,
+                user: JSON.parse(localStorage.getItem('user')),
                 userId:'',//用户id
                 type:0,//回复评论的当前的commentId
                 leavePid:'',//赞赏等其他模块的分类id
@@ -126,29 +127,16 @@
           },
           //发送留言
           sendMsg:function(){//留言
-          //     var that = this;
-          //     if(that.textarea){
-          //         that.sendTip = '咻~~';
-          //           sendComment(that.type,that.aid,that.rootId,that.toCommentId,that.toCommentUserId,that.textarea).then((response)=>{
-          //               that.textarea = '';
-          //               that.rootId = -1;
-          //               that.toCommentId = -1;
-          //               that.toCommentUserId=-1;
-          //
-          //               that.routeChange();
-          //               that.removeRespond();
-          //               var timer02 = setTimeout(function(){
-          //                   that.sendTip = '发送~';
-          //                   clearTimeout(timer02);
-          //               },1000)
-          //           })
-          //     }else{
-          //         that.sendTip = '内容不能为空~'
-          //         var timer = setTimeout(function(){
-          //             that.sendTip = '发送~';
-          //             clearTimeout(timer);
-          //         },3000)
-          //     }
+              var that = this;
+              if(that.textarea){
+                  that.sendComment()
+              }else{
+                  that.sendTip = '内容不能为空~'
+                  var timer = setTimeout(function(){
+                      that.sendTip = '发送~';
+                      clearTimeout(timer);
+                  },3000)
+              }
           },
           respondMsg:function(rootId,toCommentId,toCommentUserId){//回复留言
               // console.log(leavePid,pid);
@@ -223,7 +211,7 @@
               this.queryParams.pageNum = 1
               this.showCommentList(true);
           },
-          getArticleComment(initData){
+          getArticleComment(initData){ //请求评论列表
               if (this.$store.state.isLogin){
                 //请求评论
                 this.request.get('/bbsReplay/replayList',{
@@ -243,6 +231,25 @@
                 this.$message.error("登录后才能查看评论哦...")
               }
 
+          },
+          sendComment(){ //发送评论
+            if (this.$store.state.isLogin){
+              //请求评论
+              this.request.post('/bbsReplay/addreplay',{"articleId":this.$route.query.contenid,"type":this.type,"rootId":this.rootId,"toCommentId":this.toCommentId,"toCommentUserId":this.toCommentUserId,"content":this.textarea}).then(
+                res => {
+                  this.routeChange();
+                  this.removeRespond();
+                  var timer02 = setTimeout(function(){
+                    this.sendTip = '发送~';
+                    clearTimeout(timer02);
+                  },1000)
+                }
+
+              )
+
+            }else {
+              this.$message.error("登录后才能查看评论哦...")
+            }
           }
         },
         components: { //定义组件
@@ -492,7 +499,7 @@
 }
 .tmsg-r-info .info-submit p,.tmsg-commentshow h1{
   /*background: #97dffd;*/
-  color:#fff;
+  color:#000000;
   border-radius: 5px;
   cursor: pointer;
   /*transition: all .3s ease-in-out;*/
@@ -500,9 +507,9 @@
   line-height: 30px;
   text-align: center;
 }
-/*.tmsg-r-info .info-submit p:hover{
-    background: #47456d;
-}*/
+/*.tmsg-r-info .info-submit p:hover{*/
+/*    background: #47456d;*/
+/*}*/
 /*评论列表*/
 .tmsg-comments .tmsg-comments-tip{
   display: block;

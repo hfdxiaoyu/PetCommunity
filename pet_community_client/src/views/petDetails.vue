@@ -1,4 +1,7 @@
 <template>
+  <div class="main">
+    <div style="width: 15%"></div>
+
   <!--宠物详细信息  -->
   <div class="post-detail">
     <h2 class="post-title">{{ this.oneContent.title }}</h2>
@@ -22,6 +25,9 @@
     <div>
       <pet-message></pet-message>
     </div>
+  </div>
+
+  <div style="width: 15%"></div>
   </div>
 </template>
 
@@ -87,9 +93,15 @@ export default {
 </script>
 
 <style scoped>
+.main{
+  display: flex;
+  flex-direction: row;
+}
 .post-detail {
   text-align: center;
-  width: 100%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
 }
 .post-title {
   margin-bottom: .25rem;

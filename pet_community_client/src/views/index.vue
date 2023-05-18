@@ -94,7 +94,7 @@ export default {
       hasMore: true,
       count: 0,
       fits:['scale-down'],
-      theme: this.$store.state.theme
+      theme: '', //主题
     }
   },
   methods: {
@@ -108,7 +108,7 @@ export default {
           params:{
             pageNum:this.pageNum,
             pageSize:this.pageSize,
-            theme : this.getThemUrl,
+            theme : this.$store.state.theme,
           }
         }).then(
           res => {
@@ -122,6 +122,7 @@ export default {
           }
 
         )
+
       } else {
         console.log("我也是有底线的哦")
       }
@@ -165,16 +166,17 @@ export default {
   computed:{
     getThemUrl() {
       //不为空返回url为空返回空
-      console.log(this.theme)
+      console.log('我是计算属性监听到的them:',this.$store.state.theme)
+      this.theme=this.$store.state.theme
       return this.$store.state.theme
     }
   },
   watch:{ //监听属性
-    theme:{
+    getThemUrl:{
       //初次加载就监听
       immediate:true,
       handler(newVal,oldVal){
-        console.log("我加载啦")
+        console.log("监听到数据，我加载啦,数据是：",this.$store.state.theme)
         this.load()
       }
 
@@ -241,4 +243,5 @@ ul,li{
   justify-content: center;
   align-items: center;
 }
+
 </style>

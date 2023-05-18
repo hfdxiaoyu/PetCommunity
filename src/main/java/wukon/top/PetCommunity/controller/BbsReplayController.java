@@ -3,13 +3,20 @@ package wukon.top.PetCommunity.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import wukon.top.PetCommunity.domain.BbsReplay;
+import wukon.top.PetCommunity.domain.dto.AddReplay;
 import wukon.top.PetCommunity.enums.StatusCodeEnum;
 import wukon.top.PetCommunity.service.BbsReplayService;
+import wukon.top.PetCommunity.util.BeanCopyUtils;
+import wukon.top.PetCommunity.util.JwtUtil;
 import wukon.top.PetCommunity.util.ResponseResult;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -65,6 +72,26 @@ public class BbsReplayController {
                                      @RequestParam Integer pageNum,
                                      @RequestParam Integer pageSize){
         return bbsReplayService.commentList(articleId,pageNum,pageSize);
+    }
+
+    /**
+      *功能描述：新增评论
+      *@param: replay
+      *@return: ResponseResult
+      */
+    @PostMapping("/addreplay")
+    public ResponseResult addreplay(@RequestBody AddReplay replay, HttpServletRequest request) throws Exception {
+        BbsReplay bbsReplay = BeanCopyUtils.copyBean(replay,BbsReplay.class);
+        String token = request.getHeader("token");//拿到token
+        //对token进行解析
+        Claims claims = JwtUtil.parseJWT(token);
+        //拿到userid
+        String userid = claims.getSubject();
+        long l = Long.parseLong(userid);
+        bbsReplay.setCreateBy(l);
+        bbsReplay.setUpdateBy(l);
+
+        return bbsReplayService.addComment(bbsReplay);
     }
 
     /**

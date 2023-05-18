@@ -3,7 +3,9 @@ package wukon.top.PetCommunity.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.jsonwebtoken.lang.Strings;
 import lombok.RequiredArgsConstructor;
+import org.omg.CORBA.SystemException;
 import wukon.top.PetCommunity.domain.BbsReplay;
 import wukon.top.PetCommunity.domain.po.CommentPo;
 import wukon.top.PetCommunity.domain.po.PagePo;
@@ -49,8 +51,14 @@ public class BbsReplayServiceImpl extends ServiceImpl<BbsReplayMapper, BbsReplay
     }
 
     @Override
-    public ResponseResult addComment(BbsReplay bbsReplay) {
-        return null;
+    public ResponseResult addComment(BbsReplay bbsReplay) throws Exception {
+        if (!Strings.hasText(bbsReplay.getContent()))
+            throw new Exception("评论内容为空！！！");
+        boolean save = save(bbsReplay);
+        if (save)
+            return new ResponseResult(StatusCodeEnum.SUCCESS.getCode(), "成功");
+        else
+            return new ResponseResult(StatusCodeEnum.ERROR.getCode(), "失败");
     }
 
     /**
