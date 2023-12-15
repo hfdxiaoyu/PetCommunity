@@ -36,15 +36,16 @@ public class BbsPetController {
     }
 
     /**
-     *功能描述：分页查询
+     *功能描述：查询宠物标签
      */
     @GetMapping("/page")
     public ResponseResult findPage(@RequestParam Integer pageNum,
-                                   @RequestParam Integer pageSize)
+                                   @RequestParam Integer pageSize,
+                                   @RequestParam String petname)
     {
         IPage<BbsPet> page = new Page<>(pageNum,pageSize);
         QueryWrapper<BbsPet> queryWrapper = new QueryWrapper<>();
-
+        queryWrapper.like("petname",petname);
         //根据id倒序
         queryWrapper.orderByDesc("id");
         IPage<BbsPet> BbsPetIPage = bbsPetService.page(page, queryWrapper);
@@ -53,7 +54,7 @@ public class BbsPetController {
     }
 
     /**
-     *功能描述：新增权限信息
+     *功能描述：新增宠物
      *@return: Integer
      */
     @PostMapping("/save")

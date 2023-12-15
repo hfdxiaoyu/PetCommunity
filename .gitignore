@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/pet_community_client/node_modules/
+

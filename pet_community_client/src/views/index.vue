@@ -87,7 +87,7 @@ export default {
   data () {
     return {
       pageNum: 1,
-      pageSize: 3,
+      pageSize: 10,
       contentList: [], //请求到的所有数据
       total: 1,
       //是否还有
@@ -164,7 +164,7 @@ export default {
     reloadInit(){ //标签改变后重置页面参数
       this.contentList=[] //初始化页面数组
       this.pageNum= 1
-      this.pageSize= 3
+      this.pageSize= 10
       this.total=1
     }
 
